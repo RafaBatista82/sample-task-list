@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Task List</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="expandable-field">
+    <div class="boton-container">
+        <img src="img/plus-square.svg" alt="Type new task" class="button">
+    </div>
+    <div class="editor-toolbar">
+        Type to add new task
+    </div>
+</div>
+<div class="editor-container">
+    <div class="editor-content">
+        <div class="boton-container">
+            <img src="img/plus-square.svg" alt="Type new task" class="button">
+        </div>
+        <div class="editor-field" contenteditable="true"></div>
+        <div id="avatar" class="avatar-container disabled">
+            <img src="img/Rafa-OK.jpg" alt="User Avatar" class="avatar">
+        </div>
+    </div>
+</div>
+<div class="editor-container">
+    <div class="button-hotizontal-container">
+    <div id="left-buttons" class="left-buttons disabled">
+        <button class="list-button">
+            <span class="icon"><img src="img/maximize-2.svg" alt="Open" class="button"></span>
+            <span class="description">Open</span>
+        </button>
+        <button class="list-button">
+            <span class="icon"><img src="img/calendar.svg" alt="Today" class="button"></span>
+            <span class="description">Today</span>
+        </button>
+        <button class="list-button">
+            <span class="icon"><img src="img/unlock.svg" alt="Public" class="button"></span>
+            <span class="description">Public</span>
+        </button>
+        <button class="list-button">
+            <span class="icon"><img src="img/sun.svg" alt="Normal" class="button"></span>
+            <span class="description">Normal</span>
+        </button>
+        <button class="list-button">
+            <span class="icon"><img src="img/disc.svg" alt="Estimation" class="button"></span>
+            <span class="description">Estimation</span>
+        </button>                        
+    </div>
+    
+    <div class="right-buttons">
+        <button id="cancel" class="list-button">
+            <span class="icon"><img src="img/x.svg" alt="Cancel" class="button"></span>
+            <span class="description">Cancel</span>
+        </button>
+        <button id="save" class="list-button">
+            <span class="icon"><img src="img/save.svg" alt="Cancel" class="button"></span>
+            <span class="description">OK</span>
+        </button>
+    </div>
+</div>
+</div>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Toggle button container when clicking the edit field
+    $('.editor-toolbar').on('click', function(e) {
+        e.stopPropagation();
+		$('.expandable-field').hide();
+        $('.editor-container').show();
+        //$('.editor-container').slideToggle(200);
+		
+    });
+
+    $('#cancel').on('click', function(e) {	
+        e.stopPropagation();	
+        //$('.editor-container').slideUp(200);
+        $('.editor-container').hide();
+        $('.expandable-field').show();		
+        $('#left-buttons').addClass('disabled');	
+        $('#avatar').addClass('disabled');
+        $('.editor-field').empty();
+    });    
+
+    $('.editor-field').on('keypress', function(e) {	        
+        $('#left-buttons').removeClass('disabled');	
+        $('#avatar').removeClass('disabled');	 
+    });        
+
+    /*
+    // Handle button clicks
+    $('.option-button').on('click', function() {
+        const selectedValue = $(this).text();
+        $('.edit-field').val(selectedValue);
+        $('.button-container').slideUp(200);
+    });
+
+    // Close button container when clicking outside
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.expandable-field').length) {
+            $('.button-container').slideUp(200);
+        }
+    });
+ */
+
+});
+</script>
+</body>
+</html>
