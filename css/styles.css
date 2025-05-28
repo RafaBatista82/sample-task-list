@@ -1,4 +1,4 @@
- .expandable-field {
+        .expandable-field {
             width: 300px;
             position: relative;
         }
@@ -52,6 +52,15 @@
             margin:0px auto;
         }
 
+        .task-container {
+            width: 80%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin:0px auto;
+        }        
+
         .expandable-field{
             min-height: 30px;
         }
@@ -61,6 +70,21 @@
         }
 
         .editor-toolbar {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+			min-height: 25px;
+			
+            width: 90%;
+            outline: none;
+            padding-left: 50px; /* Space for avatar */
+            padding-right: 30px; /* Space for avatar */
+            line-height: 1.6;
+            color: #999;			
+        }
+
+        .task-value {
             padding: 10px;
             border-bottom: 1px solid #eee;
             display: flex;
@@ -121,7 +145,25 @@
             overflow: hidden;
             border: 2px solid #fff;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }        
+        }       
+        
+        .task-container .pointer-container {
+            width: 20px;
+            height: 20px;
+            display:flex;
+            padding-top:20px;
+            padding-left:20px;
+            width: 20px;
+            height: 20px;
+        }          
+
+        .task-container .task-value{
+            padding-left:50px;
+            margin-right:350px;
+            margin-top:-32px;
+            display:flex;
+            width:95%;
+        }
 		
 		.expandable-field .boton-container {
             position: absolute;

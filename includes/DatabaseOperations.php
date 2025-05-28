@@ -68,12 +68,16 @@ class DatabaseOperations {
     }
 
     // SELECT query
-    public function select($table, $columns = "*", $where = "", $params = []) {
+    public function select($table, $columns = "*", $where = "", $params = [], $orderBy = "", $order = "ASC") {
         try {
             $sql = "SELECT $columns FROM $table";
-            if ($where) {
+            if ($where != "") {
                 $sql .= " WHERE $where";
             }
+
+            if ($orderBy != "") {
+                $sql .= " ORDER BY " . $orderBy . " " . strtoupper($order);
+             }
             
             $stmt = $this->db->prepare($sql);
             $stmt->execute($params);

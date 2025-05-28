@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Task List</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
@@ -65,9 +66,78 @@
 </div>
 </div>
 
-<script src="js/jquery-3.6.0.min.js"></script>
+    <!-- Contenedor para los datos -->
+    <div class="data-container">
+        <div id="results"></div>
+    </div>
+
+    <!-- Loading spinner -->
+    <div class="loading">
+        Cargando datos...
+    </div>
+
+
 <script>
+
 $(document).ready(function() {
+        let Insert = true;
+        let idToEdit = 0;
+
+        loadData();
+
+        // Función para recargar datos
+        function loadData() {
+            // Mostrar loading
+            $('.loading').show();
+            
+            $.ajax({
+                url: 'includes/process.php',
+                method: 'POST',
+                data: { action: 'getData' },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        displayData(response.data);
+                    } else {
+                        showError(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    showError('Error en la petición: ' + error);
+                },
+                complete: function() {
+                    // Ocultar loading
+                    $('.loading').hide();
+                }
+            });
+        }  
+            
+            
+            // Función para mostrar los datos
+        function displayData(data) {
+            let html = '';
+            
+            // Datos
+            data.forEach(item => {
+
+                Object.entries(item).forEach(([key, value]) => {  
+                    if(key == 'id'){
+                        html += `<div class="task-container"><div class="pointer-container" value="${value}"><img src="img/square.svg" alt="Type new task"></div>`;
+                        id = value;
+                    }
+
+                    if(key == 'task'){                    
+                        html += `<div class="task-value" id="task-${id}">${value}</div></div>`;
+                    }    
+                });
+
+            });
+            
+            html += '';
+            $('#results').html(html);
+        }        
+
+
     // Toggle button container when clicking the edit field
     $('.editor-toolbar').on('click', function(e) {
         e.stopPropagation();
@@ -77,6 +147,36 @@ $(document).ready(function() {
 		
     });
 
+    $('#save').on('click', function(e) {	
+        if(Insert){
+                $.ajax({
+					url: 'includes/process.php',
+					method: 'POST',
+					data: { 
+						action: 'addTask',
+						task: $('.editor-field').html()
+					},
+					dataType: 'json',
+					success: function(response) {
+						if (response.success) {
+							// Recargar datos después de agregar
+							loadData();
+						}
+					}
+				});
+        }else{
+            alert("Modificacion")
+        }
+
+        $('.editor-container').hide();
+        $('.expandable-field').show();		
+        $('#left-buttons').addClass('disabled');	
+        $('#avatar').addClass('disabled');
+        $('.editor-field').empty();
+        Insert = true;
+
+    });     
+
     $('#cancel').on('click', function(e) {	
         e.stopPropagation();	
         //$('.editor-container').slideUp(200);
@@ -85,12 +185,23 @@ $(document).ready(function() {
         $('#left-buttons').addClass('disabled');	
         $('#avatar').addClass('disabled');
         $('.editor-field').empty();
+        Insert = true;
     });    
 
     $('.editor-field').on('keypress', function(e) {	        
         $('#left-buttons').removeClass('disabled');	
         $('#avatar').removeClass('disabled');	 
-    });        
+    }); 
+
+    $(document).on("click", "div.pointer-container", function() {
+        $('.editor-field').html($('#task-' + $(this).attr("value")).html());
+        $('#left-buttons').removeClass('disabled');	
+        $('#avatar').removeClass('disabled');	        
+		$('.expandable-field').hide();
+        $('.editor-container').show();   
+        Insert = false;     
+    });    
+
 
     /*
     // Handle button clicks
@@ -109,6 +220,8 @@ $(document).ready(function() {
  */
 
 });
+
+ 
 </script>
 </body>
 </html>
