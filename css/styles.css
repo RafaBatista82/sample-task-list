@@ -423,4 +423,16 @@
     .icon {
          margin-right: 0px; 
     }
+
+    
+    .task-container .task-value {
+        width: 90%;
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+    .task-container .task-value {
+        width: 80%;
+    }    
 }
