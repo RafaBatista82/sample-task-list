@@ -112,6 +112,27 @@ $(document).ready(function() {
                 }
             });
         }  
+
+        function loadTaskByID(id) {
+            // Mostrar loading
+            
+            $.ajax({
+                url: 'includes/process.php',
+                method: 'POST',
+                data: { action: 'getTaskByID', id: id },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        $('.editor-field').html(response.data[0]['task']);
+                    } else {
+                        showError(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    showError('Error en la petición: ' + error);
+                }
+            });
+        }          
             
             
             // Función para mostrar los datos
@@ -136,7 +157,8 @@ $(document).ready(function() {
             
             html += '';
             $('#results').html(html);
-        }        
+        }    
+       
 
 
     // Toggle button container when clicking the edit field
@@ -210,7 +232,8 @@ $(document).ready(function() {
     }); 
 
     $(document).on("click", "div.pointer-container", function() {
-        $('.editor-field').html($('#task-' + $(this).attr("value")).html());
+        //$('.editor-field').html($('#task-' + $(this).attr("value")).html());
+        loadTaskByID($(this).attr("value"));
         $('#left-buttons').removeClass('disabled');	
         $('#avatar').removeClass('disabled');	        
 		$('.expandable-field').hide();

@@ -18,6 +18,15 @@ try {
                 'message' => 'Data loaded succesfull'
             ];
             break;
+
+        case 'getTaskByID':
+            $tasks = $db->select('tasks', 'task', 'id = :id', ['id' => $_POST['id']], 'id', 'DESC');
+            $response = [
+                'success' => true,
+                'data' => $tasks,
+                'message' => 'Data loaded succesfull'
+            ];
+            break;            
             
         case 'addTask':
             $taskData = [
