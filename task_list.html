@@ -17,6 +17,7 @@
         Type to add new task
     </div>
 </div>
+
 <div class="editor-container">
     <div class="editor-content">
         <div class="boton-container">
@@ -59,12 +60,13 @@
             <span class="description">Cancel</span>
         </button>
         <button id="save" class="list-button">
-            <span class="icon"><img src="img/save.svg" alt="Cancel" class="button"></span>
+            <span class="icon"><img src="img/save.svg" id="changingButton" alt="Save" class="button"></span>
             <span class="description">OK</span>
         </button>
     </div>
 </div>
 </div>
+
 
     <!-- Contenedor para los datos -->
     <div class="data-container">
@@ -80,6 +82,9 @@
 <script>
 
 $(document).ready(function() {
+
+        const viewportWidth = window.innerWidth;
+
         let Insert = true;
         let idToEdit = 0;
         const $editor = $('#editor');
@@ -132,10 +137,61 @@ $(document).ready(function() {
                     showError('Error en la petición: ' + error);
                 }
             });
-        }          
+        }     
+        
+        //
+        function changeFormat(value){
+
+            let temp = '';
+
+            let hastagCount = 0;
+            let urlCount = 0;
+            let emailCount = 0;
+            let twitterCount = 0;
+
+            // Create a temporary DOM element to parse HTML
+             const tempDiv = document.createElement('div');
+             tempDiv.innerHTML = value;
+    
+            // Get all span elements
+            const spans = tempDiv.getElementsByTagName('span');
+
+            Array.from(spans).forEach(span => {
+
+                const content = span.textContent.trim();
+
+                if (content.startsWith('@')) {
+
+                    twitterCount = twitterCount + 1;
+                    temp = content.substring(1);
+                    value = value.replace(content,temp);
+
+                } else if (content.includes('@')) {
+
+                    emailCount = emailCount + 1;
+                  
+                    value = value.replace(content,"Mail " + emailCount);
+
+                } else if (content.startsWith('#')) {
+
+                    hastagCount = hastagCount + 1;
+                    temp = content.substring(1);
+                    value = value.replace(content,temp);                    
+
+                } else if (content.toLowerCase().startsWith('www')) {
+                    
+                    urlCount = urlCount + 1;
+                    value = value.replace(content,"Link " + urlCount);
+
+                }                
+
+            }); 
+
+            return value;
+        }
             
             
-            // Función para mostrar los datos
+        // Función para mostrar los datos
         function displayData(data) {
             let html = '';
             
@@ -149,7 +205,7 @@ $(document).ready(function() {
                     }
 
                     if(key == 'task'){                    
-                        html += `<div class="task-value" id="task-${id}">${value}</div></div>`;
+                        html += `<div class="task-value" id="task-${id}">${changeFormat(value)}</div></div>`;
                     }    
                 });
 
@@ -166,8 +222,11 @@ $(document).ready(function() {
         e.stopPropagation();
 		$('.expandable-field').hide();
         $('.editor-container').show();
-        //$('.editor-container').slideToggle(200);
 		
+        if( viewportWidth < 1230 ){
+            $('#save').hide();
+        }
+
     });
 
     $('#save').on('click', function(e) {	
@@ -217,7 +276,6 @@ $(document).ready(function() {
 
     $('#cancel').on('click', function(e) {	
         e.stopPropagation();	
-        //$('.editor-container').slideUp(200);
         $('.editor-container').hide();
         $('.expandable-field').show();		
         $('#left-buttons').addClass('disabled');	
@@ -228,54 +286,38 @@ $(document).ready(function() {
 
     $('.editor-field').on('keypress', function(e) {	        
         $('#left-buttons').removeClass('disabled');	
-        $('#avatar').removeClass('disabled');	 
+        $('#avatar').removeClass('disabled');
+        
+        if( viewportWidth < 1230 ){
+            $('#cancel').hide();
+            $('#changingButton').attr('src', 'img/plus.svg');
+            $('#save').show();
+        }        
     }); 
 
     $(document).on("click", "div.pointer-container", function() {
-        //$('.editor-field').html($('#task-' + $(this).attr("value")).html());
         loadTaskByID($(this).attr("value"));
         $('#left-buttons').removeClass('disabled');	
         $('#avatar').removeClass('disabled');	        
 		$('.expandable-field').hide();
         $('.editor-container').show();   
         idToEdit = $(this).attr("value");
-        Insert = false;     
+        Insert = false;    
+        
+        if( viewportWidth < 1230 ){
+            $('#cancel').hide();
+            $('#changingButton').attr('src', 'img/save.svg');
+            $('#save').show();
+        }        
     });    
-
-
-    /*
-    // Handle button clicks
-    $('.option-button').on('click', function() {
-        const selectedValue = $(this).text();
-        $('.edit-field').val(selectedValue);
-        $('.button-container').slideUp(200);
-    });
-
-    // Close button container when clicking outside
-    $(document).on('click', function(e) {
-        if (!$(e.target).closest('.expandable-field').length) {
-            $('.button-container').slideUp(200);
-        }
-    });
- */
 
     /* Patrons Recognizer */
     // Method 1: Using keyup
     $editor.on('keyup', function(e) {
-        //alert("entra keyup");
                 if (e.key === ' ' || e.keyCode === 32) {
                     processLastWord();
                 }
             });
-
-            // Method 2: Using input event
-            /*$editor.on('input', function(e) {
-               // alert("entra input");
-                if (e.originalEvent.data === ' ') {
-                    processLastWord();
-                }
-                //updateWordCount();
-            });*/
 
             function processLastWord() {
                 const text = $editor.text();
@@ -290,7 +332,7 @@ $(document).ready(function() {
                         formatWord(lastWord, 'twitter');
                     } else if (lastWord.includes('@')) {
                         formatWord(lastWord, 'email');
-                    } else if (lastWord.startsWith('http')) {
+                    } else if (lastWord.startsWith('www')) {
                         formatWord(lastWord, 'url');
                     }
                 }
@@ -320,20 +362,13 @@ $(document).ready(function() {
                 selection.removeAllRanges();
                 selection.addRange(range);
             }
-/*
-            function updateWordCount() {
-                const words = $editor.text().trim().split(/\s+/);
-                $wordCount.text(`Words: ${words.length}`);
-            }
-*/
+
             // Handle paste events
             $editor.on('paste', function(e) {
                 e.preventDefault();
                 const text = (e.originalEvent || e).clipboardData.getData('text/plain');
                 document.execCommand('insertText', false, text);
             });
-
-
 
 });
 

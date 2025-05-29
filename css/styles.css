@@ -1,264 +1,247 @@
-        .expandable-field {
-            width: 300px;
-            position: relative;
-        }
+.expandable-field {
+    width: 300px;
+    position: relative;
+}
 
-        .edit-field {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+.edit-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
-        .button-container {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: white;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            margin-top: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            z-index: 1000;
-        }
+.button-container {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
 
-        .option-button {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            background: none;
-            text-align: left;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
+.option-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
 
-        .option-button:hover {
-            background-color: #f5f5f5;
-        }
+.option-button:hover {
+    background-color: #f5f5f5;
+}
 
-        .option-button:not(:last-child) {
-            border-bottom: 1px solid #eee;
-        }
+.option-button:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}
 
-        .editor-container, .expandable-field {
-            width: 80%;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-            overflow: hidden;
-            margin:0px auto;
-        }
-
-        
-        .loading {
-            width: 80%;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-            overflow: hidden;
-            margin:0px auto;
-            text-align:center;
-            min-height:80px;
-            /*display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;*/
-        }
-
-        .task-container {
-            width: 80%;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-            overflow: hidden;
-            margin:0px auto;
-        }        
-
-        .expandable-field{
-            min-height: 30px;
-        }
-
-        .editor-container{
-            display: none;
-        }
-
-        .editor-toolbar {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            gap: 10px;
-			min-height: 25px;
-			
-            width: 90%;
-            outline: none;
-            padding-left: 50px; /* Space for avatar */
-            padding-right: 30px; /* Space for avatar */
-            line-height: 1.6;
-            color: #999;			
-        }
-
-        .task-value {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            /*display: flex;
-            gap: 10px;*/
-			min-height: 25px;
-			
-            width: 90%;
-            outline: none;
-            padding-left: 50px; /* Space for avatar */
-            padding-right: 30px; /* Space for avatar */
-            line-height: 1.6;
-            color: #999;			
-        }
-
-        .editor-content {
-            position: relative;
-            min-height: 50px;
-            padding: 10px 20px 20px 20px;
-        }
-
-        .editor-field {
-            width: 90%;
-            min-height: 50px;
-            outline: none;
-            padding-left: 30px; /* Space for avatar */
-            padding-right: 30px; /* Space for avatar */
-            line-height: 1.6;
-            color: #333;
-        }
-		
+.editor-container, .expandable-field {
+    width: 80%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin:0px auto;
+}
 
 
-        .avatar-container {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+.loading {
+    width: 80%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin:0px auto;
+    text-align:center;
+    min-height:80px;
+}
 
-        .avatar {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+.task-container {
+    width: 80%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin:0px auto;
+}        
 
-        .boton-container {
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }       
-        
-        .task-container .pointer-container {
-            width: 20px;
-            height: 20px;
-            /*display:flex;*/
-            padding-top:20px;
-            padding-left:20px;
-            width: 20px;
-            height: 20px;
-        }          
+.expandable-field{
+    min-height: 30px;
+}
 
-        .task-container .task-value{
-            padding-left:50px;
-            margin-right:350px;
-            margin-top:-32px;
-            /*display:flex;*/
-            width:95%;
-        }
-		
-		.expandable-field .boton-container {
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        } 
+.editor-container{
+    display: none;
+}
 
-        .button {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+.editor-toolbar {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+	min-height: 25px;	
+    width: 90%;
+    outline: none;
+    padding-left: 50px; /* Space for avatar */
+    padding-right: 30px; /* Space for avatar */
+    line-height: 1.6;
+    color: #999;			
+}
 
-        /* Placeholder style */
-        .editor-field[contenteditable=true]:empty:before {
-            content: 'Type to add new task';
-            color: #999;
-        }        
-		
-		
-        .icon-list {
-            display: flex;
-            gap: 20px;
-            list-style: none;
-            padding: 20px;
-            background: white;
-        }
+.task-value {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+	min-height: 25px;
+	
+    width: 90%;
+    outline: none;
+    padding-left: 50px; /* Space for avatar */
+    padding-right: 30px; /* Space for avatar */
+    line-height: 1.6;
+    color: #999;			
+}
 
-        .icon-list li {
-            position: relative;
-        }
+.editor-content {
+    position: relative;
+    min-height: 50px;
+    padding: 10px 20px 20px 20px;
+}
 
-        .icon-list a {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: #333;
-            transition: transform 0.2s, color 0.2s;
-            padding: 15px;
-        }
+.editor-field {
+    width: 90%;
+    min-height: 50px;
+    outline: none;
+    padding-left: 30px; /* Space for avatar */
+    padding-right: 30px; /* Space for avatar */
+    line-height: 1.6;
+    color: #333;
+}
 
-        .icon-list a:hover {
-            color: #007bff;
-            transform: translateY(-3px);
-        }
 
-        .icon-list i {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
 
-        .icon-list span {
-            font-size: 14px;
-            font-family: Arial, sans-serif;
-        }
+.avatar-container {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 
-        /* Optional: Add a hover effect with pseudo-element */
-        .icon-list a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background-color: #007bff;
-            transition: width 0.2s, left 0.2s;
-        }
+.avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-        .icon-list a:hover::after {
-            width: 100%;
-            left: 0;
-        }	
+.boton-container {
+    position: absolute;
+    top: 13px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+}       
 
+.task-container .pointer-container {
+    width: 20px;
+    height: 20px;
+    padding-top:20px;
+    padding-left:20px;
+    width: 20px;
+    height: 20px;
+}          
+
+.task-container .task-value{
+    padding-left:50px;
+    margin-right:350px;
+    margin-top:-32px;
+    width:95%;
+}
+
+.expandable-field .boton-container {
+    position: absolute;
+    top: 13px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+} 
+
+.button {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Placeholder style */
+.editor-field[contenteditable=true]:empty:before {
+    content: 'Type to add new task';
+    color: #999;
+}        
+
+
+.icon-list {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    padding: 20px;
+    background: white;
+}
+
+.icon-list li {
+    position: relative;
+}
+
+.icon-list a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    transition: transform 0.2s, color 0.2s;
+    padding: 15px;
+}
+
+.icon-list a:hover {
+    color: #007bff;
+    transform: translateY(-3px);
+}
+
+.icon-list i {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.icon-list span {
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+}
+
+/* Optional: Add a hover effect with pseudo-element */
+.icon-list a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #007bff;
+    transition: width 0.2s, left 0.2s;
+}
+
+.icon-list a:hover::after {
+    width: 100%;
+    left: 0;
+}	
 
  /*Para el listado horizontal*/       
 .button-hotizontal-container {
@@ -325,85 +308,119 @@
 
 /*To the @,#,url and email*/
 .twitter { 
-    color: #1e5a47; 
-    display: inline-flex;
-    align-items: center;
-    padding: 1px 5px;
-    background-color: #8adac0;
-    border-radius: 30px;
-} /*Green*/
-.hashtag { color: #784dac;
-    display: inline-flex;
-    align-items: center;
-    padding: 1px 5px;
-    background-color: #c9b0e8;
-    border-radius: 30px;
-}  /* Violet */
-
-.email { color: #af7620;
-    /*display: inline-flex;*/
+    color: #31a67e; 
     display: inline-block;
     align-items: left;
     padding: 1px 5px 1px 30px;
-    background-color: #e1b069;
+    background-color: #a2f2d8;
     border-radius: 30px;
-}    /* Orange */
+    cursor: pointer;
+} /*Green*/
 
-.email::before{
+.data-container .twitter::before{
     content: "";
     display: inline-flex;
     align-items: center;
     width: 20px;
     height: 20px;
-    background-image: url('../img/square.svg'); /* Reemplaza con tu imagen */
+    background-image: url('../img/at-sign.svg'); /* Reemplaza con tu imagen */
     background-size: cover;
     margin-top: 3px;
     margin-left: -23px;
     position: absolute;
 }
 
-.url { color: #3174b8; 
-    /*display: inline-flex;*/
+.hashtag { 
+    color: #7f52cb;
     display: inline-block;
     align-items: left;
     padding: 1px 5px 1px 30px;
-    background-color: #6babea;
+    background-color: #ddc6fe;
     border-radius: 30px;
-}      /* Blue */
+    cursor: pointer;
+}  /* Violet */
 
-.url::before{
+.data-container .hashtag::before{
     content: "";
     display: inline-flex;
     align-items: center;
     width: 20px;
     height: 20px;
-    background-image: url('../img/square.svg'); /* Reemplaza con tu imagen */
+    background-image: url('../img/hash.svg'); /* Reemplaza con tu imagen */
     background-size: cover;
     margin-top: 3px;
     margin-left: -23px;
     position: absolute;
+}
+
+.email { 
+    color: #e3a24a;
+    display: inline-block;
+    align-items: left;
+    padding: 1px 5px 1px 30px;
+    background-color: #fde6c4;
+    border-radius: 30px;
+    cursor: pointer;
+}    /* Orange */
+
+.data-container .email::before{
+    content: "";
+    display: inline-flex;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    background-image: url('../img/mail.svg'); /* Reemplaza con tu imagen */
+    background-size: cover;
+    margin-top: 3px;
+    margin-left: -23px;
+    position: absolute;
+}
+
+.url { 
+    color: #4e8bcd; 
+    display: inline-block;
+    align-items: left;
+    padding: 1px 5px 1px 30px;
+    background-color: #d8e8ff;
+    border-radius: 30px;
+    cursor: pointer;
+}      /* Blue */
+
+.data-container .url::before{
+    content: "";
+    display: inline-flex;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    background-image: url('../img/link.svg'); /* Reemplaza con tu imagen */
+    background-size: cover;
+    margin-top: 3px;
+    margin-left: -23px;
+    position: absolute;
+}
+
+.editor-field .hashtag, .editor-field .url, .editor-field .email, .editor-field .twitter{
+    padding: 0px 0px 0px 0px;
+    border-radius: none;  
+    background-color: inherit;  
 }
 
 /* Modo adaptativo para pantallas peque�as */
 @media screen and (max-width: 1230px) {
-   /* .button-hotizontal-container {
-        flex-direction: column;
-        gap: 10px;
+    #cancel{
+        background-color: blue;
+        color: white;
     }
 
-    .left-buttons, .right-buttons {
-        width: 100%;
-        justify-content: flex-start;
-    }
-    
-    .list-button {
-        flex: 1;
-    }*/
     .description {
         display: none;
     }
 
     .right-buttons .icon{
         display: flex;
+    }
+
+    .icon {
+         margin-right: 0px; 
     }
 }
