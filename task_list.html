@@ -22,7 +22,7 @@
         <div class="boton-container">
             <img src="img/plus-square.svg" alt="Type new task" class="button">
         </div>
-        <div class="editor-field" contenteditable="true"></div>
+        <div class="editor-field" id="editor" contenteditable="true"></div>
         <div id="avatar" class="avatar-container disabled">
             <img src="img/Rafa-OK.jpg" alt="User Avatar" class="avatar">
         </div>
@@ -73,7 +73,7 @@
 
     <!-- Loading spinner -->
     <div class="loading">
-        Cargando datos...
+        Loading data...
     </div>
 
 
@@ -82,6 +82,7 @@
 $(document).ready(function() {
         let Insert = true;
         let idToEdit = 0;
+        const $editor = $('#editor');
 
         loadData();
 
@@ -165,7 +166,22 @@ $(document).ready(function() {
 					}
 				});
         }else{
-            alert("Modificacion")
+                $.ajax({
+					url: 'includes/process.php',
+					method: 'POST',
+					data: { 
+						action: 'updateTask',
+						task: $('.editor-field').html(),
+                        id: idToEdit
+					},
+					dataType: 'json',
+					success: function(response) {
+						if (response.success) {
+							// Recargar datos después de agregar
+							loadData();
+						}
+					}
+				});
         }
 
         $('.editor-container').hide();
@@ -199,6 +215,7 @@ $(document).ready(function() {
         $('#avatar').removeClass('disabled');	        
 		$('.expandable-field').hide();
         $('.editor-container').show();   
+        idToEdit = $(this).attr("value");
         Insert = false;     
     });    
 
@@ -218,6 +235,82 @@ $(document).ready(function() {
         }
     });
  */
+
+    /* Patrons Recognizer */
+    // Method 1: Using keyup
+    $editor.on('keyup', function(e) {
+        //alert("entra keyup");
+                if (e.key === ' ' || e.keyCode === 32) {
+                    processLastWord();
+                }
+            });
+
+            // Method 2: Using input event
+            /*$editor.on('input', function(e) {
+               // alert("entra input");
+                if (e.originalEvent.data === ' ') {
+                    processLastWord();
+                }
+                //updateWordCount();
+            });*/
+
+            function processLastWord() {
+                const text = $editor.text();
+                const words = text.split(/\s+/);
+                const lastWord = words[words.length - 2]; // Word before space
+
+                if (lastWord) {
+                    // Detect word type and format
+                    if (lastWord.startsWith('#')) {
+                        formatWord(lastWord, 'hashtag');
+                    } else if (lastWord.startsWith('@')) {
+                        formatWord(lastWord, 'twitter');
+                    } else if (lastWord.includes('@')) {
+                        formatWord(lastWord, 'email');
+                    } else if (lastWord.startsWith('http')) {
+                        formatWord(lastWord, 'url');
+                    }
+                }
+            }
+
+            function formatWord(word, type) {
+                const html = $editor.html();
+                const formattedWord = `<span class="${type}">${word}</span>`;
+                const lastIndex = html.lastIndexOf(word);
+                
+                if (lastIndex !== -1) {
+                    const newHtml = html.substring(0, lastIndex) + 
+                                  formattedWord + 
+                                  html.substring(lastIndex + word.length);
+                    $editor.html(newHtml);
+                    
+                    // Move cursor to end
+                    moveCaretToEnd();
+                }
+            }
+
+            function moveCaretToEnd() {
+                const range = document.createRange();
+                const selection = window.getSelection();
+                range.selectNodeContents($editor[0]);
+                range.collapse(false);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
+/*
+            function updateWordCount() {
+                const words = $editor.text().trim().split(/\s+/);
+                $wordCount.text(`Words: ${words.length}`);
+            }
+*/
+            // Handle paste events
+            $editor.on('paste', function(e) {
+                e.preventDefault();
+                const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+                document.execCommand('insertText', false, text);
+            });
+
+
 
 });
 

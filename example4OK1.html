@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #editor {
+            width: 100%;
+            min-height: 100px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+		.twitter { color: #76c1a9; } /*Green*/
+        .hashtag { color: #c9b0e8; }  /* Violet */
+        .email { color: #e1b069; }    /* Orange */
+        .url { color: #6babea; }      /* Blue */
+    </style>
+</head>
+<body>
+    <div id="editor" contenteditable="true"></div>
+    <div id="wordCount"></div>
+
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const $editor = $('#editor');
+            const $wordCount = $('#wordCount');
+
+            // Method 1: Using keyup
+            $editor.on('keyup', function(e) {
+                if (e.key === ' ' || e.keyCode === 32) {
+                    processLastWord();
+					alert("entra");
+                }
+            });
+
+            // Method 2: Using input event
+            /*$editor.on('input', function(e) {
+                if (e.originalEvent.data === ' ') {
+                    processLastWord();
+                }
+                updateWordCount();
+            });*/
+
+            function processLastWord() {
+                const text = $editor.text();
+                const words = text.split(/\s+/);
+                const lastWord = words[words.length - 2]; // Word before space
+
+                if (lastWord) {
+                    // Detect word type and format
+                    if (lastWord.startsWith('#')) {
+                        formatWord(lastWord, 'hashtag');
+                    } else if (lastWord.startsWith('@')) {
+                        formatWord(lastWord, 'twitter');
+                    } else if (lastWord.includes('@')) {
+                        formatWord(lastWord, 'email');
+                    } else if (lastWord.startsWith('http')) {
+                        formatWord(lastWord, 'url');
+                    }
+                }
+            }
+
+            function formatWord(word, type) {
+                const html = $editor.html();
+                const formattedWord = `<span class="${type}">${word}</span>`;
+                const lastIndex = html.lastIndexOf(word);
+                
+                if (lastIndex !== -1) {
+                    const newHtml = html.substring(0, lastIndex) + 
+                                  formattedWord + 
+                                  html.substring(lastIndex + word.length);
+                    $editor.html(newHtml);
+                    
+                    // Move cursor to end
+                    moveCaretToEnd();
+                }
+            }
+
+            function moveCaretToEnd() {
+                const range = document.createRange();
+                const selection = window.getSelection();
+                range.selectNodeContents($editor[0]);
+                range.collapse(false);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
+
+            function updateWordCount() {
+                const words = $editor.text().trim().split(/\s+/);
+                $wordCount.text(`Words: ${words.length}`);
+            }
+
+            // Handle paste events
+            $editor.on('paste', function(e) {
+                e.preventDefault();
+                const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+                document.execCommand('insertText', false, text);
+            });
+        });
+    </script>
+</body>
+</html>

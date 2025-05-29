@@ -114,7 +114,12 @@ class DatabaseOperations {
                 $sets[] = "$column = :$column";
             }
             
-            $sql = "UPDATE $table SET " . implode(", ", $sets) . " WHERE $where";
+            $sql = "UPDATE $table SET " . implode(", ", $sets);
+
+            if ($where != "") {
+                $sql .= " WHERE $where";
+            }
+
             $stmt = $this->db->prepare($sql);
             
             // Bind SET values
@@ -132,7 +137,7 @@ class DatabaseOperations {
             throw new Exception("Update failed: " . $e->getMessage());
         }
     }
-	
+
     // DELETE query
     public function delete($table, $where, $params = []) {
         try {

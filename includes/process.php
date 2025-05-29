@@ -30,6 +30,26 @@ try {
                 'id' => $id
             ];
             break;
+
+        case 'updateTask':
+            $taskData = [
+                'task' => $_POST['task'] ?? ''
+            ];
+            
+            // Update existing record
+            $id = $db->update(
+                'tasks',
+                $taskData,
+                'id = ' . $_POST['id'],
+                []
+            );    
+
+            $response = [
+                'success' => true,
+                'message' => 'Task updated succesfull',
+                'id' => $id
+            ];
+            break;            
             
         default:
             throw new Exception('No valid action');
