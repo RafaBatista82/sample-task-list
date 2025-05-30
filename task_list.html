@@ -106,9 +106,11 @@ $(document).ready(function() {
                         displayData(response.data);
                     } else {
                         showError(response.message);
+                        $('.loading').hide();
                     }
                 },
                 error: function(xhr, status, error) {
+                    $('.loading').hide();
                     showError('Error en la petición: ' + error);
                 },
                 complete: function() {

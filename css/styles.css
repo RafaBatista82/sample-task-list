@@ -405,7 +405,7 @@
     background-color: inherit;  
 }
 
-/* Modo adaptativo para pantallas peque�as */
+/* Modo adaptativo para pantallas pequenas */
 @media screen and (max-width: 1230px) {
     #cancel{
         background-color: blue;
