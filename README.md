@@ -1,1 +1,1 @@
-To get the application up and running, you need to copy it to a hosting with PHP, create a MySQL database, configure the includes/db_config.php file with the database access values, and that's it. Access task_list.html
+To get the application up and running, you need to copy it to a hosting with PHP, create a MySQL database, configure the includes/db_config.php file with the database access values, and that's it. Access the determinate url to get the file "task_list.html"
